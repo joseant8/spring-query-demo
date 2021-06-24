@@ -51,7 +51,7 @@ public class MovimientoServiceImpl implements MovimientoService {
 	public List<Movimiento> obtenerMovimientosDeUsuario(Long idUsuario) {
 		// Obtenemos todos los movimientos de un usuario (es decir, los movimientos de todas sus cuentas)
 		List<Movimiento> movimientos = new ArrayList<>();
-		List<Cuenta> cuentas = cuentaRepository.obtenerCuentasByUserId(idUsuario);
+		List<Cuenta> cuentas = cuentaRepository.obtenerCuentasByUsuarioId(idUsuario);
 		for(Cuenta c: cuentas){
 			movimientos.addAll(c.getMovimientos());
 		}

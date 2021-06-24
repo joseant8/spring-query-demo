@@ -38,7 +38,7 @@ public class TarjetaServiceImpl implements TarjetaService {
 	@Transactional
 	@Override
 	public List<Tarjeta> obtenerTarjetasByUsuario(Long usuarioId) {
-		List<Cuenta> cuentas = cuentaRepository.obtenerCuentasByUserId(usuarioId);
+		List<Cuenta> cuentas = cuentaRepository.obtenerCuentasByUsuarioId(usuarioId);
 		List<Tarjeta> tarjetas = new ArrayList<>();
 		for(Cuenta c: cuentas){
 			tarjetas.addAll(c.getTarjetas());
