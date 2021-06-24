@@ -11,8 +11,11 @@ public interface CuentaRepository extends JpaRepository<Cuenta, Long> {
 
 	boolean existsByIban(String iban);
 
-	@Query("select c from Cuenta c join c.usuarios u where u.id = :idUsuario")
-	List<Cuenta> obtenerCuentasByUserId(@Param("idUsuario")Long idUsuario);
+	@Query("SELECT c FROM Cuenta c JOIN c.usuarios u WHERE u.id = :idUsuario")   // JPQL
+	List<Cuenta> obtenerCuentasByUsuarioId(@Param("idUsuario")Long idUsuario);
+
+	@Query(value = "SELECT * FROM cuenta c INNER JOIN usuario_cuenta uc ON c.id=uc.cuenta_id INNER JOIN usuario u ON uc.usuario_id=u.id WHERE u.id=:idUsuario", nativeQuery = true)   // SQL
+	List<Cuenta> obtenerCuentasByUsuarioIdV2(@Param("idUsuario")Long idUsuario);
 
 
 }

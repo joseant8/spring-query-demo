@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +21,66 @@ public class CuentaController {
 
 	@Autowired
 	private MovimientoService movimientoService;
+
+
+	// --------------------------------------------
+	// Obtener datos - consultas select
+	// --------------------------------------------
+	
+	/**
+	 * Devuelve la cuenta según su id
+	 * @param idCuenta
+	 * @return Cuenta
+	 */
+	@GetMapping("/{idCuenta}")
+	public ResponseEntity<Cuenta> obtenerCuentaById(@PathVariable("idCuenta")Long idCuenta){
+		try {
+			Cuenta cuenta = cuentaService.obtenerCuentaById(idCuenta);			
+			return ResponseEntity.ok().body(cuenta);
+		}catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	/**
+	 * Obtenemos todas las tarjetas de la cuenta cuyo id se pasa por parámetro
+	 * @param idCuenta
+	 * @return Lista de tarjetas de la cuenta
+	 */
+	@GetMapping("/tarjetas/{idCuenta}")
+	public List<Tarjeta> obtenerTodasTarjetasCuenta(@PathVariable("idCuenta")Long idCuenta){
+		try {
+			Cuenta cuenta = cuentaService.obtenerCuentaById(idCuenta);
+			return cuenta.getTarjetas();
+		}catch(Exception e) {
+			return new ArrayList<>();
+		}
+	}
+	
+	/**
+	 * Obtiene todas las cuentas del usuario con el id pasado por parámetro
+	 * @param idUsuario
+	 * @return Lista de cuentas del usuario
+	 */
+	@GetMapping("/usuario/{idUsuario}")
+	public List<Cuenta> obtenerTodasCuentasByUsuarioId(@PathVariable("idUsuario") Long idUsuario){
+		return cuentaService.obtenerTodasCuentasByUsuarioId(idUsuario);
+	}
+
+	/**
+	 * Obtiene todas las cuentas del usuario con el id pasado por parámetro (V2)
+	 * @param idUsuario id del usuario
+	 * @return Lista de cuentas del usuario
+	 */
+	@GetMapping("/usuario/v2/{idUsuario}")
+	public List<Cuenta> obtenerTodasCuentasByUsuarioIdV2(@PathVariable("idUsuario") Long idUsuario){
+		return cuentaService.obtenerTodasCuentasByUsuarioIdV2(idUsuario);
+	}
+
+
+	// --------------------------------------------
+	// Crear
+	// --------------------------------------------
 
 	/**
 	 * Crear una nueva nueva cuenta
@@ -39,46 +98,4 @@ public class CuentaController {
 		}
 		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
-	
-	/**
-	 * Devuelve la cuenta según su id
-	 * @param idCuenta id de la cuenta
-	 * @return Cuenta
-	 */
-	@GetMapping("/{idCuenta}")
-	public ResponseEntity<Cuenta> obtenerCuentaById(@PathVariable("idCuenta")Long idCuenta){
-		try {
-			Cuenta cuenta = cuentaService.obtenerCuentaById(idCuenta);			
-			return ResponseEntity.ok().body(cuenta);
-		}catch(Exception e) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-	}
-
-	/**
-	 * Obtenemos todas las tarjetas de la cuenta cuyo id se pasa por parámetro
-	 * @param idCuenta id de la cuenta
-	 * @return Lista de tarjetas asociadas a la cuenta
-	 */
-	@GetMapping("/tarjetas/{idCuenta}")
-	public List<Tarjeta> obtenerTodasTarjetasCuenta(@PathVariable("idCuenta")Long idCuenta){
-		try {
-			Cuenta cuenta = cuentaService.obtenerCuentaById(idCuenta);
-			return cuenta.getTarjetas();
-		}catch(Exception e) {
-			return new ArrayList<>();
-		}
-	}
-	
-	/**
-	 * Obtiene la lista de todas las cuentas que pertenecen al usuario con el id pasado por parámetro
-	 * @param idUsuario id del usuario
-	 * @return Lista de cuentas del usuario
-	 */
-	@GetMapping("/usuario/{idUsuario}")
-	public List<Cuenta> obtenerTodasCuentasByUsuarioId(@PathVariable("idUsuario") Long idUsuario){
-		return cuentaService.obtenerTodasCuentasByUsuarioId(idUsuario);
-	}
-	
-	
 }

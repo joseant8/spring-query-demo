@@ -15,24 +15,29 @@ public class CuentaServiceImpl implements CuentaService {
 	@Autowired
 	CuentaRepository cuentaRepository;
 	
-	
-	@Override
-	public Cuenta crearCuenta(Cuenta cuenta) {
-		 if(cuentaRepository.existsByIban(cuenta.getIban())){
-			 return cuenta;
-		 }
-		return cuentaRepository.save(cuenta);
-	}
 
 	@Override
 	public Cuenta obtenerCuentaById(Long idCuenta) {
 		return cuentaRepository.findById(idCuenta).orElseThrow(()
-				-> new EntityNotFoundException("No se ha encontrado categoria con id: "+idCuenta));
+				-> new EntityNotFoundException("No se ha encontrado la cuenta con id: "+idCuenta));
 	}
 
 	@Override
 	public List<Cuenta> obtenerTodasCuentasByUsuarioId(Long idUsuario) {
-		return cuentaRepository.obtenerCuentasByUserId(idUsuario);
+		return cuentaRepository.obtenerCuentasByUsuarioId(idUsuario);
+	}
+
+	@Override
+	public List<Cuenta> obtenerTodasCuentasByUsuarioIdV2(Long idUsuario) {
+		return cuentaRepository.obtenerCuentasByUsuarioIdV2(idUsuario);
+	}
+
+	@Override
+	public Cuenta crearCuenta(Cuenta cuenta) {
+		if(cuentaRepository.existsByIban(cuenta.getIban())){
+			return cuenta;
+		}
+		return cuentaRepository.save(cuenta);
 	}
 
 }

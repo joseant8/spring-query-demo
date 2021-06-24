@@ -8,12 +8,10 @@ import java.util.List;
 @Service
 public interface CuentaService {
 
-	/**
-	 * Crea una nueva cuenta
-	 * @param cuenta cuenta que queremos crear
-	 * @return La cuenta creada
-	 */
-	Cuenta crearCuenta(Cuenta cuenta);
+
+	// ---------------------------------
+	// Consultas select
+	// ---------------------------------
 
 	/**
 	 * Obtener una cuenta según el id
@@ -28,5 +26,25 @@ public interface CuentaService {
 	 * @return Lista de cuentas
 	 */
 	List<Cuenta> obtenerTodasCuentasByUsuarioId(Long idUsuario);
+
+
+	/**
+	 * Obtener las cuentas del usuario según su id
+	 * @param idUsuario id del usuario
+	 * @return Lista de cuentas
+	 */
+	List<Cuenta> obtenerTodasCuentasByUsuarioIdV2(Long idUsuario);
+
+
+	// ---------------------------------
+	// Crear
+	// ---------------------------------
+
+	/**
+	 * Crea una nueva cuenta
+	 * @param cuenta cuenta que queremos crear
+	 * @return La cuenta creada
+	 */
+	Cuenta crearCuenta(Cuenta cuenta);
 
 }
