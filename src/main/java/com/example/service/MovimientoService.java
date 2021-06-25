@@ -8,12 +8,34 @@ import java.util.List;
 
 @Service
 public interface MovimientoService {
-	
+
+	/**
+	 * Obtiene todos los movimientos realizados con la tarjeta indicada
+	 * @param idTarjeta
+	 * @return lista de movimientos
+	 */
 	public List<Movimiento> obtenerMovimientosDeTarjeta(Long idTarjeta);
-	
+
+	/**
+	 * Obtiene todos los movimientos realizados con la cuenta indicada
+	 * @param idCuenta
+	 * @return lista de movimientos
+	 */
 	public List<Movimiento> obtenerMovimientosDeCuenta(Long idCuenta);
 
+	/**
+	 * Obtiene todos los movimientos realizados por el usuario indicado (es decir, de todas sus cuentas)
+	 * @param idUsuario
+	 * @return
+	 */
 	public List<Movimiento> obtenerMovimientosDeUsuario(Long idUsuario);
+
+	/**
+	 * Obtiene todos los movimientos realizados por el usuario indicado (V2 con JPQL)
+	 * @param idUsuario
+	 * @return
+	 */
+	public List<Movimiento> obtenerMovimientosDeUsuarioV2(Long idUsuario);
 	
 	public List<Movimiento> obtenerMovimientoFechaCuenta(Long idCuenta,LocalDate fechaInit, LocalDate fechaFin);
 

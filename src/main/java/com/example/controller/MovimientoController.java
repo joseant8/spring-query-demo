@@ -16,7 +16,57 @@ public class MovimientoController {
 	
 	@Autowired
 	private MovimientoService movimientoService;
+
+
+	// --------------------------------------------
+	// Obtener datos - consultas select
+	// --------------------------------------------
 	
+	/**
+	 * Obtiene todos los movimientos de una tarjeta
+	 * @param idTarjeta
+	 * @return lista de movimientos de la tarjeta
+	 */
+	@GetMapping("/tarjeta/{idTarjeta}")
+	public List<Movimiento> obtenerTodosLosMovimientosPorTarjeta(@PathVariable Long idTarjeta){
+		return movimientoService.obtenerMovimientosDeTarjeta(idTarjeta);
+	}
+	
+	/**
+	 * Obtenemos todos los movimientos de una cuenta
+	 * @param idCuenta
+	 * @return Lista de movimientos de la cuenta
+	 */
+	@GetMapping("/cuenta/{idCuenta}")
+	public List<Movimiento> obtenerTodosLosMovimientosPorCuenta(@PathVariable Long idCuenta){
+		return movimientoService.obtenerMovimientosDeCuenta(idCuenta);
+	}
+
+	/**
+	 * Obtenemos todos los movimientos de un usuario
+	 * @param idUsuario
+	 * @return Lista de movimientos del usuario
+	 */
+	@GetMapping("/usuario/{idUsuario}")
+	public List<Movimiento> obtenerTodosLosMovimientosPorUsuario(@PathVariable Long idUsuario){
+		return movimientoService.obtenerMovimientosDeUsuario(idUsuario);
+	}
+
+	/**
+	 * Obtenemos todos los movimientos de un usuario (V2 con JPQL)
+	 * @param idUsuario
+	 * @return Lista de movimientos del usuario
+	 */
+	@GetMapping("/usuario/v2/{idUsuario}")
+	public List<Movimiento> obtenerTodosLosMovimientosPorUsuarioV2(@PathVariable Long idUsuario){
+		return movimientoService.obtenerMovimientosDeUsuarioV2(idUsuario);
+	}
+
+
+	// --------------------------------------------
+	// Crear
+	// --------------------------------------------
+
 	/**
 	 * Metodo para guardad nuevo movimiento en la base de datos
 	 * @param movimientoNuevo movimiento que se quiere almacenar en la base de datos
@@ -30,31 +80,10 @@ public class MovimientoController {
 				return ResponseEntity.ok().body(movimientoGuardado);
 			}else {
 				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-			}			
+			}
 		}catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
-		
-	}
-	
-	/**
-	 * Obtiene todos los movimientos de una tarjeta
-	 * @param idTarjeta id de la tarjeta
-	 * @return lista de movimientos de la tarjeta 
-	 */
-	@GetMapping("/tarjeta/{idTarjeta}")
-	public List<Movimiento> obtenerTodosLosMovimientosPorTarjeta(@PathVariable Long idTarjeta){
-		return movimientoService.obtenerMovimientosDeTarjeta(idTarjeta);
-	}
-	
-	/**
-	 * Obtenemos todos los movimientos de una cuenta
-	 * @param idCuenta id de la cuenta
-	 * @return Lista de movimientos de la cuenta
-	 */
-	@GetMapping("/cuenta/{idCuenta}")
-	public List<Movimiento> obtenerTodosLosMovimientosPorCuenta(@PathVariable Long idCuenta){
-		return movimientoService.obtenerMovimientosDeCuenta(idCuenta);
 	}
 
 }

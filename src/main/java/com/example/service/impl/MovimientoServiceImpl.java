@@ -32,14 +32,14 @@ public class MovimientoServiceImpl implements MovimientoService {
 	@Autowired
 	UsuarioRepository usuarioRepository;
 
-	@Transactional
+	//@Transactional
 	@Override
 	public List<Movimiento> obtenerMovimientosDeTarjeta(Long idTarjeta) {
-		// Obtenermos todos los movimientos con el metodo del repositorio
+		// Obtenermos todos los movimientos de una tarjeta
 		return movimientoRepository.obtenerMovimientosDeTarjeta(idTarjeta);
 	}
 
-	@Transactional
+	//@Transactional
 	@Override
 	public List<Movimiento> obtenerMovimientosDeCuenta(Long idCuenta) {
 		// Obtenemos todos los movimientos de una cuenta
@@ -56,6 +56,11 @@ public class MovimientoServiceImpl implements MovimientoService {
 			movimientos.addAll(c.getMovimientos());
 		}
 		return movimientos;
+	}
+
+	@Override
+	public List<Movimiento> obtenerMovimientosDeUsuarioV2(Long idUsuario) {
+		return movimientoRepository.obtenerMovimientosDeUsuarioV2(idUsuario);
 	}
 
 	@Override
