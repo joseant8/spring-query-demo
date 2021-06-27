@@ -4,6 +4,10 @@ package com.example.controller;
 import com.example.model.Movimiento;
 import com.example.service.MovimientoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -62,15 +66,89 @@ public class MovimientoController {
 		return movimientoService.obtenerMovimientosDeUsuarioV2(idUsuario);
 	}
 
+	/**
+	 * Obtenemos todos los movimientos de un usuario (V3 con JPQL)
+	 * @param idUsuario
+	 * @return Lista de movimientos del usuario
+	 */
+	@GetMapping("/usuario/v3/{idUsuario}")
+	public List<Movimiento> obtenerTodosLosMovimientosPorUsuarioV3(@PathVariable Long idUsuario){
+		return movimientoService.obtenerMovimientosDeUsuarioV3(idUsuario);
+	}
+
+	/**
+	 * Obtenemos todos los movimientos de una cuenta ordenados por fecha (JPQL)
+	 * @param idCuenta
+	 * @return Lista de movimientos de la cuenta
+	 */
+	@GetMapping("/cuenta/orden/fecha/desc/{idCuenta}")
+	public List<Movimiento> obtenerMovimientosDeCuentaOrdenadosFechaDESC(@PathVariable Long idCuenta){
+		return movimientoService.obtenerMovimientosDeCuentaOrdenadosFechaDESC(idCuenta);
+	}
+
+	/**
+	 * Obtenemos todos los movimientos de una cuenta ordenados (JPQL)
+	 * @param idCuenta
+	 * @return Lista de movimientos de la cuenta
+	 */
+	@GetMapping("/cuenta/orden/{idCuenta}")
+	public List<Movimiento> obtenerMovimientosDeCuentaOrdenados(@PathVariable Long idCuenta, @RequestParam(name="fecha", required = false) String fecha){
+		if(fecha != null){
+			if(fecha.equals("ASC")){
+				return movimientoService.obtenerMovimientosDeCuentaOrdenados(idCuenta, Sort.by(Sort.Direction.ASC, "fecha"));
+			}else{
+				return movimientoService.obtenerMovimientosDeCuentaOrdenados(idCuenta, Sort.by(Sort.Direction.DESC, "fecha"));
+			}
+		}
+		// orden por defecto en caso de que no se indique nada
+		return movimientoService.obtenerMovimientosDeCuentaOrdenados(idCuenta, Sort.by(Sort.Direction.ASC, "id"));
+	}
+
+	// --------------------------------------------
+	// Obtener datos Paginados
+	// --------------------------------------------
+
+
+	/**
+	 * Obtenemos todos los movimientos paginados
+	 * @return página de movimientos
+	 */
+	@GetMapping("/pagina")
+	public Page<Movimiento> obtenerMovimientosPagina(){
+
+		Sort sort = Sort.by(Sort.Direction.ASC, "id");
+		int pageNumber = 1;  // La primera página es la número 0
+		int pageSize = 3;
+		Pageable pageable = PageRequest.of(pageNumber-1, pageSize, sort);
+
+		return movimientoService.obtenerMovimientosPagina(pageable);
+	}
+
+	/**
+	 * Obtenemos los movimientos de una cuenta paginados y ordenados por fecha desc
+	 * @param idCuenta
+	 * @return página de movimientos
+	 */
+	@GetMapping("/cuenta/pagina/{idCuenta}")
+	public Page<Movimiento> obtenerMovimientosDeCuentaOrdenadosFechaPagina(@PathVariable Long idCuenta){
+
+		Sort sort = Sort.by(Sort.Direction.DESC, "fecha");
+		int pageNumber = 1;
+		int pageSize = 3;
+		Pageable pageable = PageRequest.of(pageNumber-1, pageSize, sort);
+
+		return movimientoService.obtenerMovimientosDeCuentaOrdenadosFechaPagina(idCuenta, pageable);
+	}
+
 
 	// --------------------------------------------
 	// Crear
 	// --------------------------------------------
 
 	/**
-	 * Metodo para guardad nuevo movimiento en la base de datos
-	 * @param movimientoNuevo movimiento que se quiere almacenar en la base de datos
-	 * @return devuelve el objeto guardado en la base de datos de tipo Movmiento
+	 * Método para guardar nuevo movimiento en la BD
+	 * @param movimientoNuevo
+	 * @return devuelve el nuevo movimiento creado
 	 */
 	@PostMapping
 	public ResponseEntity<Movimiento> crearMovimiento(@RequestBody Movimiento movimientoNuevo) {

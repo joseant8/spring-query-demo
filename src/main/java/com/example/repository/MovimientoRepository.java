@@ -1,6 +1,9 @@
 package com.example.repository;
 
 import com.example.model.Movimiento;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -18,8 +21,20 @@ public interface MovimientoRepository extends JpaRepository<Movimiento, Long> {
 	@Query("SELECT m FROM Movimiento m WHERE m.cuenta.id= :idCuenta")
 	List<Movimiento> obtenerMovimientosDeCuenta(@Param("idCuenta") Long idcuenta);
 
-	@Query("SELECT m FROM Movimiento m JOIN Cuenta c JOIN c.usuarios u WHERE u.id=:idUsuario") // TODO
+	@Query("SELECT m FROM Usuario u JOIN u.cuentas c JOIN c.movimientos m WHERE u.id=:idUsuario")
 	List<Movimiento> obtenerMovimientosDeUsuarioV2(@Param("idUsuario") Long idUsuario);
+
+	@Query("SELECT m FROM Movimiento m WHERE m.cuenta.id IN (SELECT c.id FROM Cuenta c JOIN c.usuarios u WHERE u.id=:idUsuario)")
+	List<Movimiento> obtenerMovimientosDeUsuarioV3(@Param("idUsuario") Long idUsuario);
+
+	@Query("SELECT m FROM Movimiento m WHERE m.cuenta.id=:idCuenta ORDER BY m.fecha DESC")
+	List<Movimiento> obtenerMovimientosDeCuentaOrdenadosFechaDESC(Long idCuenta);
+
+	@Query("SELECT m FROM Movimiento m WHERE m.cuenta.id=:idCuenta")
+	List<Movimiento> obtenerMovimientosDeCuentaOrdenados(Long idCuenta, Sort sort);
+
+	@Query("SELECT m FROM Movimiento m WHERE m.cuenta.id=:idCuenta")
+	Page<Movimiento> obtenerMovimientosDeCuentaOrdenadosFechaPagina(Long idCuenta, Pageable pageable);
 
 
 
@@ -37,8 +52,5 @@ public interface MovimientoRepository extends JpaRepository<Movimiento, Long> {
 
 	@Query("select m from Movimiento m where m.cuenta.id = :idCuenta AND m.fecha BETWEEN :fechaInit AND :fechaFin ORDER BY m.fecha")
 	List<Movimiento> obtenerMovimientosDeCuentaFechas(@Param("idCuenta")Long idCuenta, @Param("fechaInit") Date dateInit,@Param("fechaFin") Date datefin);
-
-	@Query("SELECT m FROM Movimiento m WHERE m.cuenta.id= :idCuenta ORDER BY m.fecha DESC")
-	List<Movimiento> obtenerMovimientosDeCuentaOrdenadosCuenta(Long idCuenta);
 	
 }

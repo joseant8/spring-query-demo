@@ -7,6 +7,9 @@ import com.example.model.Usuario;
 import com.example.repository.*;
 import com.example.service.MovimientoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -62,6 +65,32 @@ public class MovimientoServiceImpl implements MovimientoService {
 	public List<Movimiento> obtenerMovimientosDeUsuarioV2(Long idUsuario) {
 		return movimientoRepository.obtenerMovimientosDeUsuarioV2(idUsuario);
 	}
+
+	@Override
+	public List<Movimiento> obtenerMovimientosDeUsuarioV3(Long idUsuario) {
+		return movimientoRepository.obtenerMovimientosDeUsuarioV3(idUsuario);
+	}
+
+	@Override
+	public List<Movimiento> obtenerMovimientosDeCuentaOrdenadosFechaDESC(Long idCuenta) {
+		return movimientoRepository.obtenerMovimientosDeCuentaOrdenadosFechaDESC(idCuenta);
+	}
+
+	@Override
+	public List<Movimiento> obtenerMovimientosDeCuentaOrdenados(Long idCuenta, Sort sort) {
+		return movimientoRepository.obtenerMovimientosDeCuentaOrdenados(idCuenta, sort);
+	}
+
+	@Override
+	public Page<Movimiento> obtenerMovimientosPagina(Pageable pageable) {
+		return movimientoRepository.findAll(pageable);
+	}
+
+	@Override
+	public Page<Movimiento> obtenerMovimientosDeCuentaOrdenadosFechaPagina(Long idCuenta, Pageable pageable) {
+		return movimientoRepository.obtenerMovimientosDeCuentaOrdenadosFechaPagina(idCuenta, pageable);
+	}
+
 
 	@Override
 	public List<Movimiento> obtenerMovimientoFechaTarjeta(Long idTarjeta, LocalDate fechaInit, LocalDate fechaFin) {
@@ -148,13 +177,4 @@ public class MovimientoServiceImpl implements MovimientoService {
 			throw new Exception();
 		}
 	}
-
-	@Override
-	public List<Movimiento> obtenerMovimientosDeCuentaOrdenadosFecha(Long idCuenta) {
-		return movimientoRepository.obtenerMovimientosDeCuentaOrdenadosCuenta(idCuenta);
-
-	}
-
-
-
 }
