@@ -1,0 +1,202 @@
+{
+	"info": {
+		"_postman_id": "68e793ef-c23e-4eff-bcf4-bba233088043",
+		"name": "SpringQueryDemo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Movimiento",
+			"item": [
+				{
+					"name": "obtenerTodosLosMovimientosPorTarjeta",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/API/movimientos/tarjeta/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"API",
+								"movimientos",
+								"tarjeta",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obtenerTodosLosMovimientosPorUsuario",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/API/movimientos/usuario/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"API",
+								"movimientos",
+								"usuario",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obtenerTodosLosMovimientosPorUsuarioV2",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/API/movimientos/usuario/v2/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"API",
+								"movimientos",
+								"usuario",
+								"v2",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obtenerTodosLosMovimientosPorUsuarioV3",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/API/movimientos/usuario/v3/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"API",
+								"movimientos",
+								"usuario",
+								"v3",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obtenerMovimientosDeCuentaOrdenadosFechaDESC",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/API/movimientos/cuenta/orden/fecha/desc/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"API",
+								"movimientos",
+								"cuenta",
+								"orden",
+								"fecha",
+								"desc",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obtenerMovimientosDeCuentaOrdenados",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/API/movimientos/cuenta/orden/1?fecha=DESC",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"API",
+								"movimientos",
+								"cuenta",
+								"orden",
+								"1"
+							],
+							"query": [
+								{
+									"key": "fecha",
+									"value": "DESC"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obtenerMovimientosPagina",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/API/movimientos/pagina",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"API",
+								"movimientos",
+								"pagina"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obtenerMovimientosDeCuentaOrdenadosPagina",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/API/movimientos/cuenta/pagina/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"API",
+								"movimientos",
+								"cuenta",
+								"pagina",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
