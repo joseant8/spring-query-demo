@@ -22,8 +22,13 @@ public class PrestamoServiceImpl implements PrestamoService {
     MovimientoService movimientoService;
 
     @Override
-    public List<Prestamo> obtenerPrestamosUsuario(Long usuario_id) {
-        return prestamoRepositorio.obtenerPrestamosUsuario(usuario_id);
+    public List<Prestamo> obtenerPrestamosDeUsuario(Long usuario_id) {
+        return prestamoRepositorio.obtenerPrestamosDeUsuario(usuario_id);
+    }
+
+    @Override
+    public List<Prestamo> obtenerPrestamosCuentasDeUsuario(Long usuario_id) {
+        return prestamoRepositorio.obtenerPrestamosCuentasDeUsuario(usuario_id);
     }
 
     @Override

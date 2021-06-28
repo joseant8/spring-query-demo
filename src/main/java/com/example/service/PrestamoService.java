@@ -13,7 +13,15 @@ public interface PrestamoService {
      * @param usuario_id id del usuario
      * @return Lista de préstamos.
      */
-    public List<Prestamo> obtenerPrestamosUsuario(Long usuario_id);
+    public List<Prestamo> obtenerPrestamosDeUsuario(Long usuario_id);
+
+
+    /**
+     * Obtiene todos los préstamos de las cuentas del usuario indicado.
+     * @param usuario_id id del usuario
+     * @return Lista de préstamos.
+     */
+    public List<Prestamo> obtenerPrestamosCuentasDeUsuario(Long usuario_id);
 
 
     /**

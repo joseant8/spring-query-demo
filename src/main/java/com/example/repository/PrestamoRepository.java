@@ -12,6 +12,9 @@ import java.util.List;
 public interface PrestamoRepository extends JpaRepository<Prestamo, Long> {
 
     @Query("SELECT p FROM Prestamo p WHERE p.usuario.id = :id")
-    List<Prestamo> obtenerPrestamosUsuario(@Param("id") Long id);
+    List<Prestamo> obtenerPrestamosDeUsuario(@Param("id") Long id);
+
+    @Query("SELECT p FROM Prestamo p WHERE p.cuentaIngreso.id IN (SELECT c.id FROM Cuenta c JOIN c.usuarios u WHERE u.id=:idUsuario)")
+    List<Prestamo> obtenerPrestamosCuentasDeUsuario(@Param("idUsuario") Long idUsuario);
 
 }
