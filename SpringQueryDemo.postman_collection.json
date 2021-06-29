@@ -641,6 +641,100 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Tarjeta",
+			"item": [
+				{
+					"name": "obtenerTarjetaById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/API/tarjetas/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"API",
+								"tarjetas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obtenerTarjetasDeUsuario",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/API/tarjetas/usuario/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"API",
+								"tarjetas",
+								"usuario",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obtenerTarjetasDeUsuarioV2",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/API/tarjetas/usuario/v2/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"API",
+								"tarjetas",
+								"usuario",
+								"v2",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obtenerTarjetasDeUsuarioV3",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/API/tarjetas/usuario/v3/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"API",
+								"tarjetas",
+								"usuario",
+								"v3",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }
