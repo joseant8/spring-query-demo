@@ -20,10 +20,6 @@ public class UsuarioController {
     @Autowired
     UsuarioService servicio;
 
-    @Autowired
-    private MovimientoService movimientoServicio;
-
-
     /**
      * Obtener un usuario según el id
      * @param id id del usuario
