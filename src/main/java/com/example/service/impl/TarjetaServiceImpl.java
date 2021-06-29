@@ -22,28 +22,33 @@ public class TarjetaServiceImpl implements TarjetaService {
 	@Autowired
 	CuentaRepository cuentaRepository;
 
-	@Transactional
-    @Override
-	public Tarjeta crearTarjeta(Tarjeta tarjetaNueva) {
-		return tarjetaRepository.save(tarjetaNueva);
-	}
 
 	@Transactional
 	@Override
-	public List<Tarjeta> obtenerTarjetasByCuenta(Long cuentaId) {
+	public List<Tarjeta> obtenerTarjetasDeCuenta(Long cuentaId) {
 		
-		return tarjetaRepository.findByCuentaId(cuentaId);
+		return tarjetaRepository.obtenerTarjetasDeCuenta(cuentaId);
 	}
 
 	@Transactional
 	@Override
-	public List<Tarjeta> obtenerTarjetasByUsuario(Long usuarioId) {
+	public List<Tarjeta> obtenerTarjetasDeUsuario(Long usuarioId) {
 		List<Cuenta> cuentas = cuentaRepository.obtenerCuentasByUsuarioId(usuarioId);
 		List<Tarjeta> tarjetas = new ArrayList<>();
 		for(Cuenta c: cuentas){
 			tarjetas.addAll(c.getTarjetas());
 		}
 		return tarjetas;
+	}
+
+	@Override
+	public List<Tarjeta> obtenerTarjetasDeUsuarioV2(Long usuarioId) {
+		return tarjetaRepository.obtenerTarjetasDeUsuarioV2(usuarioId);
+	}
+
+	@Override
+	public List<Tarjeta> obtenerTarjetasDeUsuarioV3(Long usuarioId) {
+		return tarjetaRepository.obtenerTarjetasDeUsuarioV3(usuarioId);
 	}
 
 	@Transactional
@@ -59,5 +64,10 @@ public class TarjetaServiceImpl implements TarjetaService {
                 -> new EntityNotFoundException("No se ha encontrado tarjeta con numero: "+idTarjeta));
 	}
 
-	
+	@Transactional
+	@Override
+	public Tarjeta crearTarjeta(Tarjeta tarjetaNueva) {
+		return tarjetaRepository.save(tarjetaNueva);
+	}
+
 }
