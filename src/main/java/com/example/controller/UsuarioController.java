@@ -20,6 +20,10 @@ public class UsuarioController {
     @Autowired
     UsuarioService servicio;
 
+    // --------------------------------------------
+    // Obtener datos - consultas select
+    // --------------------------------------------
+
     /**
      * Obtener un usuario según el id
      * @param id id del usuario
@@ -35,6 +39,7 @@ public class UsuarioController {
         }
     }
 
+
     /**
      * Obtener todos los usuarios de la BD
      * @return lista de usuarios
@@ -44,6 +49,21 @@ public class UsuarioController {
         return servicio.obtenerTodosUsuarios();
     }
 
+
+    /**
+     * Obtiene todos los usuarios que contengan el nombre o parte de él pasado por parámetro
+     * @param nombre nombre
+     * @return lista de usuarios
+     */
+    @GetMapping("/usuarios/contiene-nombre/{nombre}")
+    public List<Usuario> obtenerUsuariosContieneNombre(@PathVariable String nombre){
+        return servicio.obtenerUsuariosContieneNombre(nombre);
+    }
+
+
+    // --------------------------------------------
+    // Crear
+    // --------------------------------------------
 
     /**
      * Crea un nuevo usuario. Si el 'username' indicado ya existe, no se crea el usuario.

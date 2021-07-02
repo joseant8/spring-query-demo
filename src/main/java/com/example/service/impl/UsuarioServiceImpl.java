@@ -33,6 +33,11 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
+    public List<Usuario> obtenerUsuariosContieneNombre(String nombre) {
+        return usuarioRepositorio.obtenerUsuariosContieneNombre(nombre);
+    }
+
+    @Override
     public Optional<Usuario> crearUsuario(Usuario usuario) {
         // miramos si ya existe un usuario con el 'username' indicado
         if(usuarioRepositorio.existsByUsername(usuario.getUsername())){
