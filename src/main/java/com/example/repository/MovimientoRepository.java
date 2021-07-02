@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -36,11 +37,14 @@ public interface MovimientoRepository extends JpaRepository<Movimiento, Long> {
 	@Query("SELECT m FROM Movimiento m WHERE m.cuenta.id=:idCuenta")
 	Page<Movimiento> obtenerMovimientosDeCuentaOrdenadosFechaPagina(Long idCuenta, Pageable pageable);
 
+	@Query("SELECT m FROM Movimiento m WHERE m.cuenta.id=:idCuenta AND m.fecha BETWEEN :fechaInit AND :fechaFin ORDER BY m.fecha DESC")
+	List<Movimiento> obtenerMovimientosDeCuentaByFecha(@Param("idCuenta")Long idTarjeta, @Param("fechaInit")Date fechaInit, @Param("fechaFin")Date fechaFin);
+
 
 
 	@Query("select m from Movimiento m where m.tarjeta.id = :idTarjeta AND m.fecha BETWEEN :fechaInit AND :fechaFin ")
-	List<Movimiento> obtenerMovimientosDeTarjetaFechas(@Param("idTarjeta")Long idTarjeta, @Param("fechaInit")Date fechaInit, @Param("fechaFin")Date fechaFin);
-	
+	List<Movimiento> obtenerMovimientosDeTarjetaByFecha(@Param("idTarjeta")Long idTarjeta, @Param("fechaInit")Date fechaInit, @Param("fechaFin")Date fechaFin);
+
 	@Query("select m from Movimiento m where m.categoria.id= :idCategoria AND m.cuenta.id = :idCuenta AND m.fecha BETWEEN :fechaInit AND :fechaFin ")
 	List<Movimiento> obtenerMovimientosDeCuentaByFechaAndCategoria(@Param("idCuenta")Long idCuenta,@Param("idCategoria")Long idCategoria ,@Param("fechaInit")Date fechaInit, @Param("fechaFin")Date fechaFin);
 	

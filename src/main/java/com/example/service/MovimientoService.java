@@ -14,75 +14,79 @@ public interface MovimientoService {
 
 	/**
 	 * Obtiene todos los movimientos realizados con la tarjeta indicada
-	 * @param idTarjeta
+	 * @param idTarjeta id de la tarjeta
 	 * @return lista de movimientos
 	 */
-	public List<Movimiento> obtenerMovimientosDeTarjeta(Long idTarjeta);
+	List<Movimiento> obtenerMovimientosDeTarjeta(Long idTarjeta);
 
 	/**
 	 * Obtiene todos los movimientos realizados con la cuenta indicada
-	 * @param idCuenta
+	 * @param idCuenta id de la cuenta
 	 * @return lista de movimientos
 	 */
-	public List<Movimiento> obtenerMovimientosDeCuenta(Long idCuenta);
+	List<Movimiento> obtenerMovimientosDeCuenta(Long idCuenta);
 
 	/**
 	 * Obtiene todos los movimientos realizados por el usuario indicado (es decir, de todas sus cuentas)
-	 * @param idUsuario
+	 * @param idUsuario id del usuario
 	 * @return lista de movimientos
 	 */
-	public List<Movimiento> obtenerMovimientosDeUsuario(Long idUsuario);
+	List<Movimiento> obtenerMovimientosDeUsuario(Long idUsuario);
 
 	/**
 	 * Obtiene todos los movimientos realizados por el usuario indicado (V2 con JPQL)
-	 * @param idUsuario
+	 * @param idUsuario id del usuario
 	 * @return lista de movimientos
 	 */
-	public List<Movimiento> obtenerMovimientosDeUsuarioV2(Long idUsuario);
+	List<Movimiento> obtenerMovimientosDeUsuarioV2(Long idUsuario);
 
 	/**
 	 * Obtiene todos los movimientos realizados por el usuario indicado (V3 con JPQL)
-	 * @param idUsuario
+	 * @param idUsuario id del usuario
 	 * @return lista de movimientos
 	 */
-	public List<Movimiento> obtenerMovimientosDeUsuarioV3(Long idUsuario);
+	List<Movimiento> obtenerMovimientosDeUsuarioV3(Long idUsuario);
 
 	/**
 	 * Obtiene todos los movimientos de una cuenta ordenados por fecha DESC
-	 * @param idCuenta
+	 * @param idCuenta id de la cuenta
 	 * @return lista de movimientos
 	 */
-	public List<Movimiento> obtenerMovimientosDeCuentaOrdenadosFechaDESC(Long idCuenta);
+	List<Movimiento> obtenerMovimientosDeCuentaOrdenadosFechaDESC(Long idCuenta);
 
 	/**
 	 * Obtiene todos los movimientos de una cuenta ordenados según parámetro indicado
-	 * @param idCuenta
-	 * @param sort
-	 * @return
+	 * @param idCuenta id de la cuenta
+	 * @param sort ordenación
+	 * @return lista de mivimientos
 	 */
-	public List<Movimiento> obtenerMovimientosDeCuentaOrdenados(Long idCuenta, Sort sort);
+	List<Movimiento> obtenerMovimientosDeCuentaOrdenados(Long idCuenta, Sort sort);
 
 	/**
 	 * Obtiene todos los movimientos paginados
-	 * @param pageable
-	 * @return
+	 * @param pageable paginación
+	 * @return página de movimientos
 	 */
-	public Page<Movimiento> obtenerMovimientosPagina(Pageable pageable);
+	Page<Movimiento> obtenerMovimientosPagina(Pageable pageable);
 
 	/**
-	 * Obtiene los movimientos de una cuenta paginados y ordenados por fecha desc
-	 * @param idCuenta
-	 * @param pageable
-	 * @return
+	 * Obtiene los movimientos de una cuenta paginados y ordenados por fecha DESC
+	 * @param idCuenta id de la cuenta
+	 * @param pageable paginación
+	 * @return página de movimientos
 	 */
-	public Page<Movimiento> obtenerMovimientosDeCuentaOrdenadosFechaPagina(Long idCuenta, Pageable pageable);
+	Page<Movimiento> obtenerMovimientosDeCuentaOrdenadosFechaPagina(Long idCuenta, Pageable pageable);
 
-	
-	public List<Movimiento> obtenerMovimientoFechaCuenta(Long idCuenta,LocalDate fechaInit, LocalDate fechaFin);
+	/**
+	 * Obtiene los movimientos de una cuenta según el rango de fechas indicado y ordenados por fecha DESC
+	 * @param idCuenta id de la cuenta
+	 * @param fechaInit fecha inicio
+	 * @param fechaFin fecha fin
+	 * @return lista de movimientos
+	 */
+	List<Movimiento> obtenerMovimientosDeCuentaByFecha(Long idCuenta, String fechaInit, String fechaFin);
 
-	public List<Movimiento> obtenerMovimientoFechaTarjeta(Long idTarjeta,LocalDate fechaInit, LocalDate fechaFin);
+	List<Movimiento> obtenerMovimientoFechaTarjeta(Long idTarjeta, LocalDate fechaInit, LocalDate fechaFin);
 
-	public List<Movimiento> obtenerMovimientosFechaUsuario(Long idCuenta,LocalDate fechaInit, LocalDate fechaFin);
-
-	public Movimiento crearMovimiento(Movimiento movimientoNuevo) throws Exception;
+	Movimiento crearMovimiento(Movimiento movimientoNuevo) throws Exception;
 }

@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -28,7 +29,7 @@ public class MovimientoController {
 	
 	/**
 	 * Obtiene todos los movimientos de una tarjeta
-	 * @param idTarjeta
+	 * @param idTarjeta id de la tarjeta
 	 * @return lista de movimientos de la tarjeta
 	 */
 	@GetMapping("/tarjeta/{idTarjeta}")
@@ -38,7 +39,7 @@ public class MovimientoController {
 	
 	/**
 	 * Obtenemos todos los movimientos de una cuenta
-	 * @param idCuenta
+	 * @param idCuenta id de la cuenta
 	 * @return Lista de movimientos de la cuenta
 	 */
 	@GetMapping("/cuenta/{idCuenta}")
@@ -48,7 +49,7 @@ public class MovimientoController {
 
 	/**
 	 * Obtenemos todos los movimientos de un usuario
-	 * @param idUsuario
+	 * @param idUsuario id del usuario
 	 * @return Lista de movimientos del usuario
 	 */
 	@GetMapping("/usuario/{idUsuario}")
@@ -58,7 +59,7 @@ public class MovimientoController {
 
 	/**
 	 * Obtenemos todos los movimientos de un usuario (V2 con JPQL)
-	 * @param idUsuario
+	 * @param idUsuario id del usuario
 	 * @return Lista de movimientos del usuario
 	 */
 	@GetMapping("/usuario/v2/{idUsuario}")
@@ -68,7 +69,7 @@ public class MovimientoController {
 
 	/**
 	 * Obtenemos todos los movimientos de un usuario (V3 con JPQL)
-	 * @param idUsuario
+	 * @param idUsuario id del usuario
 	 * @return Lista de movimientos del usuario
 	 */
 	@GetMapping("/usuario/v3/{idUsuario}")
@@ -78,7 +79,7 @@ public class MovimientoController {
 
 	/**
 	 * Obtenemos todos los movimientos de una cuenta ordenados por fecha (JPQL)
-	 * @param idCuenta
+	 * @param idCuenta id de la cuenta
 	 * @return Lista de movimientos de la cuenta
 	 */
 	@GetMapping("/cuenta/orden/fecha/desc/{idCuenta}")
@@ -88,7 +89,7 @@ public class MovimientoController {
 
 	/**
 	 * Obtenemos todos los movimientos de una cuenta ordenados (JPQL)
-	 * @param idCuenta
+	 * @param idCuenta id de la cuenta
 	 * @return Lista de movimientos de la cuenta
 	 */
 	@GetMapping("/cuenta/orden/{idCuenta}")
@@ -104,11 +105,7 @@ public class MovimientoController {
 		return movimientoService.obtenerMovimientosDeCuentaOrdenados(idCuenta, Sort.by(Sort.Direction.ASC, "id"));
 	}
 
-	// --------------------------------------------
-	// Obtener datos Paginados
-	// --------------------------------------------
-
-
+	// Paginación
 	/**
 	 * Obtenemos todos los movimientos paginados
 	 * @return página de movimientos
@@ -124,9 +121,10 @@ public class MovimientoController {
 		return movimientoService.obtenerMovimientosPagina(pageable);
 	}
 
+	// Paginación
 	/**
 	 * Obtenemos los movimientos de una cuenta paginados y ordenados por fecha desc
-	 * @param idCuenta
+	 * @param idCuenta id de la cuenta
 	 * @return página de movimientos
 	 */
 	@GetMapping("/cuenta/pagina/{idCuenta}")
@@ -140,6 +138,23 @@ public class MovimientoController {
 		return movimientoService.obtenerMovimientosDeCuentaOrdenadosFechaPagina(idCuenta, pageable);
 	}
 
+	/**
+	 * Obtiene los movimientos de la cuenta indicada según el rango de fechas pasado por parámetro y ordenados por fecha DESC.
+	 * Si no se pasa la fecha fin, se toma como fecha final la fecha actual.
+	 * @param idCuenta id de la cuenta
+	 * @param fechaInit fecha inicio
+	 * @param fechaFin fecha fin
+	 * @return lista de movimientos de la cuenta filtrados por fecha
+	 */
+	@GetMapping("/cuenta/fecha/{idCuenta}")
+	public List<Movimiento> obtenerMovimientosDeCuentaByFecha(@PathVariable Long idCuenta, @RequestParam(name="fechaInit") String fechaInit,
+															   @RequestParam(name="fechaFin", required = false) String fechaFin){
+		if(fechaFin == null){
+			fechaFin = LocalDate.now().toString();
+		}
+		return movimientoService.obtenerMovimientosDeCuentaByFecha(idCuenta, fechaInit, fechaFin);
+	}
+
 
 	// --------------------------------------------
 	// Crear
@@ -147,7 +162,7 @@ public class MovimientoController {
 
 	/**
 	 * Método para guardar nuevo movimiento en la BD
-	 * @param movimientoNuevo
+	 * @param movimientoNuevo movimiento que queremos crear
 	 * @return devuelve el nuevo movimiento creado
 	 */
 	@PostMapping

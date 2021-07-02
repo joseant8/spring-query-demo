@@ -3,7 +3,6 @@ package com.example.service.impl;
 import com.example.model.Cuenta;
 import com.example.model.Movimiento;
 import com.example.model.TipoMovimiento;
-import com.example.model.Usuario;
 import com.example.repository.*;
 import com.example.service.MovimientoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,16 +23,7 @@ public class MovimientoServiceImpl implements MovimientoService {
 	MovimientoRepository movimientoRepository;
 	
 	@Autowired
-	CategoriaRepository categoriaRepository;
-	
-	@Autowired
 	CuentaRepository cuentaRepository;
-	
-	@Autowired
-	TarjetaRepository tarjetaRepository;
-
-	@Autowired
-	UsuarioRepository usuarioRepository;
 
 	//@Transactional
 	@Override
@@ -91,6 +81,17 @@ public class MovimientoServiceImpl implements MovimientoService {
 		return movimientoRepository.obtenerMovimientosDeCuentaOrdenadosFechaPagina(idCuenta, pageable);
 	}
 
+	@Override
+	public List<Movimiento> obtenerMovimientosDeCuentaByFecha(Long idCuenta, String fechaInit, String fechaFin) {
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			Date dateInit = formatter.parse(fechaInit);
+			Date datefin = formatter.parse(fechaFin);
+			return movimientoRepository.obtenerMovimientosDeCuentaByFecha(idCuenta, dateInit , datefin);
+		} catch (ParseException e) {
+			return new ArrayList<>();
+		}
+	}
 
 	@Override
 	public List<Movimiento> obtenerMovimientoFechaTarjeta(Long idTarjeta, LocalDate fechaInit, LocalDate fechaFin) {
@@ -101,57 +102,28 @@ public class MovimientoServiceImpl implements MovimientoService {
 			dateInit = formatter.parse(fechaInit.toString());
 			datefin = formatter.parse(fechaFin.toString());
 		} catch (ParseException e) {
-		} 
-		return movimientoRepository.obtenerMovimientosDeTarjetaFechas(idTarjeta, dateInit , datefin);
-		
-	}
-	
-	@Override
-	public List<Movimiento> obtenerMovimientoFechaCuenta(Long idCuenta, LocalDate fechaInit, LocalDate fechaFin) {
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-		Date dateInit = null;
-		Date datefin = null;
-		try {
-			dateInit = formatter.parse(fechaInit.toString());
-			datefin = formatter.parse(fechaFin.toString());
-		} catch (ParseException e) {
-		} 
-		
-		return movimientoRepository.obtenerMovimientosDeCuentaFechas(idCuenta, dateInit , datefin);
-	}
-
-	@Override
-	@Transactional
-	public List<Movimiento> obtenerMovimientosFechaUsuario(Long idUsuario, LocalDate fechaInit, LocalDate fechaFin) {
-		Optional<Usuario> usuario = usuarioRepository.findById(idUsuario);
-		List<Movimiento> movimientosFiltroFecha = new ArrayList<>();
-		if(usuario.isPresent()){
-			for(Cuenta c: usuario.get().getCuentas()){
-				movimientosFiltroFecha.addAll(obtenerMovimientoFechaCuenta(c.getId(), fechaInit, fechaFin));
-			}
 		}
-		return movimientosFiltroFecha;
+		return movimientoRepository.obtenerMovimientosDeTarjetaByFecha(idTarjeta, dateInit , datefin);
+
 	}
 	
 	private static int ponerDiasFechaFinMes(Date fecha){
-
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(fecha); // Configuramos la fecha que se recibe
         return calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
-
- }
+	}
 
 	@Transactional
 	@Override
 	public Movimiento crearMovimiento(Movimiento movimientoNuevo) throws Exception {
 		try {
-			Optional<Cuenta> cuenta = null;
+			Optional<Cuenta> cuenta;
 			Cuenta cuentaObtenida = null;
 
 				// Obtenemos la cuenta de la base de datos que se va a realizar el movimeinto
 				cuenta = cuentaRepository.findById(movimientoNuevo.getCuenta().getId());				
 
-			if(cuenta != null) {
+			if(cuenta.isPresent()) {
 				cuentaObtenida = cuenta.get();				
 			}
 			
