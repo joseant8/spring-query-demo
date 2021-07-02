@@ -217,6 +217,35 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "obtenerMovimientosDeCuentaByFecha",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/API/movimientos/cuenta/fecha/1?fechaInit=2021-06-01",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"API",
+								"movimientos",
+								"cuenta",
+								"fecha",
+								"1"
+							],
+							"query": [
+								{
+									"key": "fechaInit",
+									"value": "2021-06-01"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -585,6 +614,28 @@
 								"API",
 								"usuarios",
 								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obtenerUsuariosContieneNombre",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/API/usuarios/contiene-nombre/mari",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"API",
+								"usuarios",
+								"contiene-nombre",
+								"mari"
 							]
 						}
 					},
